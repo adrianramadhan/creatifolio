@@ -15,4 +15,9 @@ class FrontController extends Controller
     {
         return view('front.details');
     }
+
+    public function book()
+    {
+        return view('front.book');
+    }
 }

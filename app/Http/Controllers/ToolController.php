@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Tool;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ToolController extends Controller
 {
@@ -12,7 +13,10 @@ class ToolController extends Controller
      */
     public function index()
     {
-        //
+        $tools = Tool::orderBy('id', 'desc')->get();
+        return view('admin.tools.index', [
+            'tools' => $tools,
+        ]);
     }
 
     /**
@@ -21,6 +25,7 @@ class ToolController extends Controller
     public function create()
     {
         //
+        return view('admin.tools.create');
     }
 
     /**
@@ -28,8 +33,31 @@ class ToolController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated= $request->validate([
+            'name'=> 'required|string|max:255',
+            'tagline' => 'required|string|max:22',
+            'logo' => 'required|image|mimes:png|max:2048',
+        ]);
+
+        DB::beginTransaction();
+        try{
+            if($request->hasFile('logo')){
+                $path = $request->file('logo')->store('tools','public');
+                $validated['logo']=$path;
+            }
+            
+            $newProject =Tool::create($validated);
+
+            DB::commit();
+            return redirect()->route('admin.tools.index')->with('success', 'Tool Created Succesfully');
+        }
+        catch(\Exception $e){
+            DB::rollBack();
+
+            return redirect()->back()->with('error', 'System eror'.$e->getMessage());
+        }
     }
+
 
     /**
      * Display the specified resource.
@@ -45,6 +73,9 @@ class ToolController extends Controller
     public function edit(Tool $tool)
     {
         //
+        return view('admin.tools.edit', [
+            'tool' => $tool,
+        ]);
     }
 
     /**
@@ -52,7 +83,29 @@ class ToolController extends Controller
      */
     public function update(Request $request, Tool $tool)
     {
-        //
+        $validated= $request->validate([
+            'name'=> 'required|string|max:255',
+            'tagline' => 'required|string|max:22',
+            'logo' => 'sometimes|image|mimes:png|max:2048',
+        ]);
+
+        DB::beginTransaction();
+        try{
+            if($request->hasFile('logo')){
+                $path = $request->file('logo')->store('tools','public');
+                $validated['logo']=$path;
+            }
+            
+            $tool->update($validated);
+
+            DB::commit();
+            return redirect()->route('admin.tools.index')->with('success', 'Tool Updated Succesfully');
+        }
+        catch(\Exception $e){
+            DB::rollBack();
+
+            return redirect()->back()->with('error', 'System eror'.$e->getMessage());
+        }
     }
 
     /**

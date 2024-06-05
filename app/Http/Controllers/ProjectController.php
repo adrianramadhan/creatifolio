@@ -57,7 +57,6 @@ class ProjectController extends Controller
 
             return redirect()->route('admin.projects.index')->with('success', 'Project Created Successfully');
         } catch (\Exception $e) {
-            //throw $th;
             DB::rollBack();
 
             return redirect()->back()->with('error', 'System error!'.$e->getMessage());

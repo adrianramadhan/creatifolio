@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Project;
 use App\Models\ProjectScreenshot;
+use App\Models\Tool;
 use Illuminate\Http\Request;
 
 class ProjectScreenshotController extends Controller
@@ -18,9 +20,12 @@ class ProjectScreenshotController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Project $project)
     {
-        //
+        dd($project);
+        return view('admin.project_screenshots.create',[
+            'project' => $project
+        ]);
     }
 
     /**

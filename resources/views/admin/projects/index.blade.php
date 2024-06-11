@@ -28,21 +28,23 @@
                             </div>
                         </div>
                         <div class="flex flex-row items-center gap-x-2">
-                            <a href="#" class="py-3 px-5 rounded-full bg-indigo-950 text-white">Add Tools</a>
-                            <a href="#" class="py-3 px-5 rounded-full bg-indigo-950 text-white">Add Screenshots</a>
+                            <a href="{{route('admin.project.assign.tool', $project)}}" class="py-3 px-5 rounded-full bg-indigo-950 text-white">Add Tools</a>
+                            <a href="{{route('admin.project_screenshots.create', $project)}}" class="py-3 px-5 rounded-full bg-indigo-950 text-white">Add Screenshots</a>
                         </div>
                         <div class="flex flex-row items-center gap-x-2">
                             <a href="{{route('admin.projects.edit', $project)}}" class="py-3 px-5 rounded-full bg-indigo-500 text-white">Edit</a>
-                            <a href="#" class="py-3 px-5 rounded-full bg-red-500 text-white">Delete</a>
+                            <form action="{{route('admin.projects.destroy', $project)}}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                            <button type="submit" class="py-3 px-5 rounded-full bg-red-500 text-white">Delete</button>
+                            </form>
                         </div>
                     </div>
 
                     @empty
                     <div class="flex flex-col items-center justify-center">
-                        <img src="https://images.unsplash.com/photo-1612833835541-4b3b3b3b3b3b?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="image" class="object-cover w-[300px] h-[200px] rounded-2xl">
                         <h3 class="font-bold text-xl mt-5">No Projects Found</h3>
                         <p class="text-sm text-slate-400">Create your first project now</p>
-                        <a href="{{route('admin.projects.create')}}" class="py-3 px-5 rounded-full bg-indigo-950 text-white mt-5">Add New Projects</a>
                 </div>
                 @endforelse
             </div>

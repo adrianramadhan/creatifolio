@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('My Project Tools') }}
+            {{ __('My Project Screenshots') }}
         </h2>
     </x-slot>
 
@@ -59,7 +59,7 @@
                             " alt="image" class="object-cover w-[120px] h-[90px] rounded-2xl">
                         </div>
                         <div class="flex flex-row items-center gap-x-2">
-                            <form action="{{route('admin.project_tools.destroy', $tool->pivot->id)}}" method="POST">
+                            <form action="{{route('admin.project_screenshots.destroy', $screenshot->id)}}" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="py-3 px-5 rounded-full bg-red-500 text-white">Delete</button>

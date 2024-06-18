@@ -9,7 +9,7 @@ use App\Http\Controllers\ToolController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [FrontController::class, 'index'])->name('front.index');
-Route::get('/details', [FrontController::class, 'details'])->name('front.details');
+Route::get('/details/{project:slug}', [FrontController::class, 'details'])->name('front.details');
 Route::get('/book', [FrontController::class, 'book'])->name('front.book');
 
 Route::get('/dashboard', function () {
@@ -32,7 +32,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/tools/assign/save/{project}', [ProjectToolController::class, 'store'])->name('project.assign.tool.store');
 
         Route::resource('project_screenshots', ProjectScreenshotController::class);
-        Route::get('/screenshot/{project}', [ProjectToolController::class, 'create'])->name('project_screenshots.create');
+        Route::get('/screenshot/{project}', [ProjectScreenshotController::class, 'create'])->name('project_screenshots.create');
         Route::post('/screenshot/save/{project}', [ProjectScreenshotController::class, 'store'])->name('project_screenshots.store');
     });
 

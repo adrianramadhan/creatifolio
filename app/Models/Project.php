@@ -15,6 +15,12 @@ class Project extends Model
     ];
 
     public function tools(){
-        return $this->belongsToMany(Tool::class, 'project_tools', 'project_id', 'tool_id')->withPivot('id')->wherePivotNull('deleted_at');
+        return $this->belongsToMany(Tool::class, 'project_tools', 'project_id', 'tool_id')
+        ->withPivot('id')
+        ->wherePivotNull('deleted_at');
+    }
+
+    public function screenshots(){
+        return $this->hasMany(ProjectScreenshot::class, 'project_id', 'id');
     }
 }
